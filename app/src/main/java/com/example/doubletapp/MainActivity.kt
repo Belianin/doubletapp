@@ -4,16 +4,13 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
-import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.extensions.LayoutContainer
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
 
 var habits = listOf(
@@ -29,6 +26,14 @@ class MainActivity : AppCompatActivity() {
         val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this);
         recyclerView.adapter = HabitAdapter(habits)
+
+        val fab: FloatingActionButton = findViewById(R.id.fab)
+        fab.setOnClickListener {
+            val intent = Intent(this, HabitActivity::class.java)
+                .apply { putExtra("habit", Habit.createBundle(habits[0])) }
+
+            startActivity(intent)
+        }
     }
 }
 
