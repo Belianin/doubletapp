@@ -6,14 +6,102 @@
     android:layout_height="match_parent"
     tools:context=".HabitActivity">
 
-    <TextView
-        android:id="@+id/countView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="32dp"
+        android:paddingTop="32dp">
+        <EditText
+            android:id="@+id/habit_title_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="Название"/>
+
+        <EditText
+            android:id="@+id/habit_description_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textLongMessage"
+            android:hint="Описание" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Приоритет:"></TextView>
+            <Spinner
+                android:id="@+id/habit_priority_input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/priority_list" />
+
+        </LinearLayout>
+
+        <RadioGroup
+            android:id="@+id/habit_type_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Тип:">
+
+            </TextView>
+
+            <RadioButton
+                android:id="@+id/habit_type_input_good"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:text="Полезная" />
+
+            <RadioButton
+                android:id="@+id/habit_type_input_bad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:text="Вредная"/>
+
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Периодичность:">
+            </TextView>
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:width="32dp">
+            </EditText>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="раза в">
+            </TextView>
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/period_list">
+
+            </Spinner>
+        </LinearLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

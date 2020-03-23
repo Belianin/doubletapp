@@ -34,3 +34,16 @@ enum class HabitType{
     Good,
     Bad
 }
+
+enum class Priority {
+    High,
+    Normal,
+    Low
+}
+
+class HabitPeriod(var count: Int, var type: HabitType) {
+    enum class PeriodType {
+        Day,
+        Week
+    }
+}

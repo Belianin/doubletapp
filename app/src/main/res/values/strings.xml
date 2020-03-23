@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">Doubletapp</string>
-    <string name="pow">POW!</string>
+    <string-array name="priority_list">
+        <item>Высокий</item>
+        <item>Средний</item>
+        <item>Низкий</item>
+    </string-array>
+
+    <string-array name="period_list">
+        <item>день</item>
+        <item>неделю</item>
+    </string-array>
 </resources>

@@ -3,7 +3,10 @@ package com.example.doubletapp
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.EditText
+import android.widget.Spinner
 import android.widget.TextView
+import com.google.android.material.textfield.TextInputLayout
 import java.util.*
 
 class HabitActivity : AppCompatActivity() {
@@ -22,5 +25,10 @@ class HabitActivity : AppCompatActivity() {
         val textView = findViewById<TextView>(R.id.countView)
 
         textView.text = (habit.title).toString()
+
+        val titleInput: EditText = findViewById(R.id.habit_title_input)
+        titleInput.setText(habit.title)
+
+        val priorityTitle: Spinner = findViewById(R.id.habit_priority_input)
     }
 }
