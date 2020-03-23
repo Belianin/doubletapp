@@ -2,30 +2,38 @@ package com.example.doubletapp
 
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
 import java.util.*
 
-class Habit(var title: String, var description: String, var priority: Int, var type: HabitType, var period: Date, var color: Color) {
+class Habit(var title: String, var description: String?, var priority: Priority, var type: HabitType, var period: HabitPeriod) : Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readString()!!,
+        parcel.readString(),
+        Priority.valueOf(parcel.readString()!!),
+        HabitType.valueOf(parcel.readString()!!),
+        parcel.readParcelable(HabitPeriod::class.java.classLoader)!!
+    )
 
-    companion object {
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(title)
+        parcel.writeString(description)
+        parcel.writeString(priority.name)
+        parcel.writeString(type.name)
+        parcel.writeParcelable(period, flags)
+    }
 
-        fun createBundle(habit: Habit) : Bundle {
-            val bundle = Bundle()
-            bundle.putString("title", habit.title)
-            bundle.putString("description", habit.description)
-            bundle.putInt("priority", habit.priority)
+    override fun describeContents(): Int {
+        return 0
+    }
 
-            return bundle
+    companion object CREATOR : Parcelable.Creator<Habit> {
+        override fun createFromParcel(parcel: Parcel): Habit {
+            return Habit(parcel)
         }
 
-        fun fromBundle(bundle: Bundle): Habit {
-            return Habit(
-                bundle.getString("title", null),
-                bundle.getString("description", null),
-                bundle.getInt("priority", 0),
-                HabitType.Good,
-                Date(0, 0,0),
-                Color()
-            )
+        override fun newArray(size: Int): Array<Habit?> {
+            return arrayOfNulls(size)
         }
     }
 }
@@ -38,12 +46,36 @@ enum class HabitType{
 enum class Priority {
     High,
     Normal,
-    Low
+    Low,
 }
 
-class HabitPeriod(var count: Int, var type: HabitType) {
+class HabitPeriod(var count: Int, var type: PeriodType) : Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readInt(),
+        PeriodType.valueOf(parcel.readString()!!)
+    )
+
     enum class PeriodType {
         Day,
         Week
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(count)
+        parcel.writeString(type.name)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<HabitPeriod> {
+        override fun createFromParcel(parcel: Parcel): HabitPeriod {
+            return HabitPeriod(parcel)
+        }
+
+        override fun newArray(size: Int): Array<HabitPeriod?> {
+            return arrayOfNulls(size)
+        }
     }
 }

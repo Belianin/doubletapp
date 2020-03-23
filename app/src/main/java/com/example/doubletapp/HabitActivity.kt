@@ -15,15 +15,14 @@ class HabitActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_habit)
 
-        val bundle = intent.getBundleExtra("habit")
-        val habit = if (bundle == null) {
-            Habit("", "", 0, HabitType.Good, Date(0, 0, 1), Color())
-        } else {
-            Habit.fromBundle(bundle)
-        }
+        val habit = intent.getParcelableExtra("habit") as Habit?
+            ?: Habit("", "", Priority.Normal, HabitType.Good, HabitPeriod(1, HabitPeriod.PeriodType.Day))
 
         val titleInput: EditText = findViewById(R.id.habit_title_input)
         titleInput.setText(habit.title)
+
+        val descriptionTitle: EditText = findViewById(R.id.habit_description_input)
+        descriptionTitle.setText(habit.description)
 
         val priorityTitle: Spinner = findViewById(R.id.habit_priority_input)
     }

@@ -11,11 +11,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.io.Serializable
 import java.util.*
 
 var habits = listOf(
-    Habit("Зарядка", "Утреняя разминка", 1, HabitType.Good, Date(0, 0, 1), Color()),
-    Habit("Пятничный кофе", "Выпить кофе после работы с мужиками", 2, HabitType.Bad, Date(0, 0, 1), Color()))
+    Habit("Зарядка", "Утреняя разминка", Priority.Normal, HabitType.Good, HabitPeriod(1, HabitPeriod.PeriodType.Day)),
+    Habit("Пятничный кофе", "Выпить кофе после работы с мужиками", Priority.Low, HabitType.Bad, HabitPeriod(1, HabitPeriod.PeriodType.Week)))
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener {
             val intent = Intent(this, HabitActivity::class.java)
-                .apply { putExtra("habit", Habit.createBundle(habits[0])) }
+                .apply { putExtra("habit", habits[0]) }
 
             startActivity(intent)
         }

@@ -17,23 +17,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:hint="Название"/>
+            android:hint="@string/title_hint"/>
 
         <EditText
             android:id="@+id/habit_description_input"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textLongMessage"
-            android:hint="Описание" />
+            android:hint="@string/description_hint" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Приоритет:"></TextView>
+                android:text="Приоритет:" />
             <Spinner
                 android:id="@+id/habit_priority_input"
                 android:layout_width="wrap_content"
@@ -92,7 +93,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="раза в">
+                android:text="раз(а) в">
             </TextView>
             <Spinner
                 android:layout_width="wrap_content"

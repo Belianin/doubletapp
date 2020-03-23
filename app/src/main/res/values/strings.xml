@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Doubletapp</string>
+    <string name="title_hint">Название</string>
+    <string name="description_hint">Описание</string>
     <string-array name="priority_list">
         <item>Высокий</item>
         <item>Средний</item>
