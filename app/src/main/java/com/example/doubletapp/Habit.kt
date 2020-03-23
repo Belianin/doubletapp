@@ -6,8 +6,9 @@ import android.os.Parcel
 import android.os.Parcelable
 import java.util.*
 
-class Habit(var title: String, var description: String?, var priority: Priority, var type: HabitType, var period: HabitPeriod) : Parcelable {
+class Habit(val id: Int, var title: String, var description: String?, var priority: Priority, var type: HabitType, var period: HabitPeriod) : Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readInt(),
         parcel.readString()!!,
         parcel.readString(),
         Priority.valueOf(parcel.readString()!!),
@@ -16,6 +17,7 @@ class Habit(var title: String, var description: String?, var priority: Priority,
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(id)
         parcel.writeString(title)
         parcel.writeString(description)
         parcel.writeString(priority.name)
@@ -35,6 +37,10 @@ class Habit(var title: String, var description: String?, var priority: Priority,
         override fun newArray(size: Int): Array<Habit?> {
             return arrayOfNulls(size)
         }
+
+
+        private var nextId: Int = 0
+        fun getNextId() = nextId++
     }
 }
 
@@ -59,6 +65,8 @@ class HabitPeriod(var count: Int, var type: PeriodType) : Parcelable {
         Day,
         Week
     }
+
+    override fun toString(): String = count.toString() + "раз(а) в " + type.toString()
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(count)
