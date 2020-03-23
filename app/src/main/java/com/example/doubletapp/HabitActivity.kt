@@ -22,10 +22,6 @@ class HabitActivity : AppCompatActivity() {
             Habit.fromBundle(bundle)
         }
 
-        val textView = findViewById<TextView>(R.id.countView)
-
-        textView.text = (habit.title).toString()
-
         val titleInput: EditText = findViewById(R.id.habit_title_input)
         titleInput.setText(habit.title)
 
