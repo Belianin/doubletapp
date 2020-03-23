@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
+import android.util.Log
 import java.util.*
 
 class Habit(val id: Int, var title: String, var description: String?, var priority: Priority, var type: HabitType, var period: HabitPeriod) : Parcelable {

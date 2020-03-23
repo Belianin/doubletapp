@@ -25,6 +25,10 @@ import kotlin.collections.HashMap
 private val typeString: HashMap<HabitType, String> = HashMap()
 private val priorityString: HashMap<Priority, String> = HashMap()
 
+val habits = HashMap<Int, Habit>()
+val h1 = Habit(Habit.getNextId(), "Зарядка", "Утреняя разминка", Priority.Normal, HabitType.Good, HabitPeriod(1, HabitPeriod.PeriodType.Day))
+val h2 = Habit(Habit.getNextId(), "Пятничный кофе", "Выпить кофе после работы с мужиками", Priority.Low, HabitType.Bad, HabitPeriod(1, HabitPeriod.PeriodType.Week))
+
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,12 +36,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         fillMaps()
-
-        val habits = HashMap<Int, Habit>()
-        val h1 = Habit(Habit.getNextId(), "Зарядка", "Утреняя разминка", Priority.Normal, HabitType.Good, HabitPeriod(1, HabitPeriod.PeriodType.Day))
-        val h2 = Habit(Habit.getNextId(), "Пятничный кофе", "Выпить кофе после работы с мужиками", Priority.Low, HabitType.Bad, HabitPeriod(1, HabitPeriod.PeriodType.Week))
-        habits[h1.id] = h1
-        habits[h2.id] = h2
 
         Log.d("!", "IS INTENT")
         if (intent != null) {
@@ -69,6 +67,9 @@ class MainActivity : AppCompatActivity() {
         priorityString[Priority.High] = "Высокий"
         priorityString[Priority.Normal] = "Средний"
         priorityString[Priority.Low] = "Низкий"
+
+        habits[h1.id] = h1
+        habits[h2.id] = h2
     }
 }
 

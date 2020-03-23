@@ -17,19 +17,20 @@ class HabitActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_habit)
 
-        val habit = intent.getParcelableExtra("habit") as Habit?
+        val baseHabit = intent.getParcelableExtra("habit") as Habit?
             ?: Habit(Habit.getNextId(), "", "", Priority.Normal, HabitType.Good, HabitPeriod(1, HabitPeriod.PeriodType.Day))
 
         val titleInput: EditText = findViewById(R.id.habit_title_input)
-        titleInput.setText(habit.title)
+        titleInput.setText(baseHabit.title)
 
         val descriptionTitle: EditText = findViewById(R.id.habit_description_input)
-        descriptionTitle.setText(habit.description)
+        descriptionTitle.setText(baseHabit.description)
 
         val priorityTitle: Spinner = findViewById(R.id.habit_priority_input)
 
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener {
+            val habit = Habit(baseHabit.id, titleInput.text.toString(), descriptionTitle.text.toString(), baseHabit.priority, baseHabit.type, baseHabit.period)
             val intent = Intent(this, MainActivity::class.java)
               .apply { putExtra("habit", habit) }
 
