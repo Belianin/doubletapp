@@ -34,8 +34,6 @@ val habits = HashMap<Int, Habit>()
 val h1 = Habit(Habit.getNextId(), "Зарядка", "Утреняя разминка", Priority.Normal, HabitType.Good, HabitPeriod(1, HabitPeriod.PeriodType.Day))
 val h2 = Habit(Habit.getNextId(), "Пятничный кофе", "Выпить кофе после работы с мужиками", Priority.Low, HabitType.Bad, HabitPeriod(1, HabitPeriod.PeriodType.Week))
 
-var currentHabit: Habit? = null
-
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,13 +51,16 @@ class MainActivity : AppCompatActivity() {
 
         val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = HabitAdapter(ArrayList<Habit>(habits.values))
+        recyclerView.adapter = HabitAdapter(ArrayList<Habit>(habits.values)) {
+            val intent = Intent(this, HabitActivity::class.java)
+                .apply { putExtra("habit", it) }
+
+            startActivity(intent)
+        }
 
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener {
             val intent = Intent(this, HabitActivity::class.java)
-            if (currentHabit != null)
-                intent.apply { putExtra("habit", habits[0]) }
 
             startActivity(intent)
         }
@@ -91,10 +92,10 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-class HabitAdapter(private val habits: List<Habit>) : RecyclerView.Adapter<HabitAdapter.ViewHolder>() {
+class HabitAdapter(private val habits: List<Habit>, val listener: (Habit) -> (Unit)) : RecyclerView.Adapter<HabitAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(habits[position])
+        holder.bind(habits[position], listener)
     }
 
     override fun getItemCount() = habits.size
@@ -112,7 +113,7 @@ class HabitAdapter(private val habits: List<Habit>) : RecyclerView.Adapter<Habit
         private val type: TextView = itemView.findViewById(R.id.habit_type)
         private val period: TextView = itemView.findViewById(R.id.habit_period)
 
-        fun bind(habit: Habit){
+        fun bind(habit: Habit, listener: (Habit) -> Unit){
             title.text = habit.title
             description.text = habit.description
             priority.text = priorityString[habit.priority]
@@ -121,7 +122,7 @@ class HabitAdapter(private val habits: List<Habit>) : RecyclerView.Adapter<Habit
             //itemView.setBackgroundColor(Color.parseColor("#11FF22"))
 
             itemView.setOnClickListener {
-                currentHabit = habit
+                listener(habit)
             }
         }
     }
