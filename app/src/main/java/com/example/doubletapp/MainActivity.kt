@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.util.forEach
 import androidx.core.util.set
 import androidx.core.util.valueIterator
@@ -22,12 +23,18 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 
-private val typeString: HashMap<HabitType, String> = HashMap()
-private val priorityString: HashMap<Priority, String> = HashMap()
+public val typeString: HashMap<HabitType, String> = HashMap()
+public val stringType: HashMap<String, HabitType> = HashMap()
+public val priorityString: HashMap<Priority, String> = HashMap()
+public val stringPriority: HashMap<String, Priority> = HashMap()
+val periodTypeString: HashMap<HabitPeriod.PeriodType, String> = HashMap()
+val stringPeriodType: HashMap<String, HabitPeriod.PeriodType> = HashMap()
 
 val habits = HashMap<Int, Habit>()
 val h1 = Habit(Habit.getNextId(), "Зарядка", "Утреняя разминка", Priority.Normal, HabitType.Good, HabitPeriod(1, HabitPeriod.PeriodType.Day))
 val h2 = Habit(Habit.getNextId(), "Пятничный кофе", "Выпить кофе после работы с мужиками", Priority.Low, HabitType.Bad, HabitPeriod(1, HabitPeriod.PeriodType.Week))
+
+var currentHabit: Habit? = null
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,12 +44,9 @@ class MainActivity : AppCompatActivity() {
 
         fillMaps()
 
-        Log.d("!", "IS INTENT")
         if (intent != null) {
-            Log.d("!","NOT NULL 1")
             val newHabit = intent.getParcelableExtra<Habit>("habit")
             if (newHabit != null) {
-                Log.d("!", "NOT NULL 2")
                 habits[newHabit.id] = newHabit
             }
         }
@@ -54,7 +58,8 @@ class MainActivity : AppCompatActivity() {
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener {
             val intent = Intent(this, HabitActivity::class.java)
-              //  .apply { putExtra("habit", habits[0]) }
+            if (currentHabit != null)
+                intent.apply { putExtra("habit", habits[0]) }
 
             startActivity(intent)
         }
@@ -64,9 +69,22 @@ class MainActivity : AppCompatActivity() {
         typeString[HabitType.Good] = "Полезная"
         typeString[HabitType.Bad] = "Вредная"
 
+        stringType["Полезная"] = HabitType.Good
+        stringType["Вредная"] = HabitType.Bad
+
         priorityString[Priority.High] = "Высокий"
         priorityString[Priority.Normal] = "Средний"
         priorityString[Priority.Low] = "Низкий"
+
+        stringPriority["Высокий"] = Priority.High
+        stringPriority["Средний"] = Priority.Normal
+        stringPriority["Низкий"] = Priority.Low
+
+        periodTypeString[HabitPeriod.PeriodType.Day] = "день"
+        periodTypeString[HabitPeriod.PeriodType.Week] = "неделю"
+
+        stringPeriodType["неделю"] = HabitPeriod.PeriodType.Week
+        stringPeriodType["день"] = HabitPeriod.PeriodType.Day
 
         habits[h1.id] = h1
         habits[h2.id] = h2
@@ -101,7 +119,10 @@ class HabitAdapter(private val habits: List<Habit>) : RecyclerView.Adapter<Habit
             type.text = typeString[habit.type]
             period.text = habit.period.toString()
             //itemView.setBackgroundColor(Color.parseColor("#11FF22"))
-        }
 
+            itemView.setOnClickListener {
+                currentHabit = habit
+            }
+        }
     }
 }
