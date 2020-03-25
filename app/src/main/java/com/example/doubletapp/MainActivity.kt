@@ -10,10 +10,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.util.forEach
 import androidx.core.util.set
 import androidx.core.util.valueIterator
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -48,6 +50,9 @@ class MainActivity : AppCompatActivity() {
                 habits[newHabit.id] = newHabit
             }
         }
+
+//        val navigationDrawerLayout = findViewById<DrawerLayout>(R.id.navigation_drawer_layout)
+//        navigationDrawerLayout.addDrawerListener(ActionBarDrawerToggle)
 
         val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)

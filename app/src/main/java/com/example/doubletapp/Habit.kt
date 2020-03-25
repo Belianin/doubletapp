@@ -67,7 +67,7 @@ class HabitPeriod(var count: Int, var type: PeriodType) : Parcelable {
         Week
     }
 
-    override fun toString(): String = count.toString() + "раз(а) в " + type.toString()
+    override fun toString(): String = "$count раз(а) в $type"
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(count)
